@@ -1,0 +1,180 @@
+body{
+    background-color: #892A28;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container{
+    width: 100%;    
+}
+
+.topo{
+    text-align: center;
+    color: #fff;
+    background-image: linear-gradient(to bottom, #555, #000);
+    padding: 10px;
+    font-size: 16pt;
+}
+
+.topo a, .topo a:visited{
+    text-decoration: none;
+    color: #fff;
+}
+
+.rodape{
+    text-align: center;
+    color: #fff;
+    background-image: linear-gradient(to bottom, #555, #000);
+    padding: 10px;
+}
+
+.glyphicon-cog, .glyphicon-off, .glyphicon-home{
+    float: right;
+}
+
+.logo{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formNovoPedido, .formLogin{
+    color: #000;
+	margin-left: auto;
+	margin-right: auto;
+	width: 450px;
+	padding: 10px;
+    box-shadow: 3px 2px 10px #000;
+}
+
+.meu-pedido{
+    margin-top: 5px;
+    color: #000;
+    font-size: 10pt;
+}
+
+.meu-pedido a{
+    float: left;
+}
+
+.painel{
+    color: #fff;
+    width: 100%;
+    background-color: #69110f;
+    font-size: 14pt;
+    padding: 10px;
+    float: left;
+    box-shadow: 3px 3px 15px #000;
+}
+
+.painel ul{
+    padding: 0 10px;
+    list-style: none;
+    margin-top: 10px;
+}
+
+.painel ul li{
+    border-bottom: solid #fff 1px;
+}
+
+.painel ul li a{
+    float: right;
+    color: #fff;
+}
+
+.menuGerencial{
+    padding: 15px;
+}
+
+.menuGerencial a{
+    text-decoration: none;
+    color: #333;
+}
+
+.menuGerencial a:hover{
+    text-decoration: none;
+    color: #666;
+}
+
+.pesquisar{
+    margin-top: 5px;
+    padding: 10px;
+}
+
+.lista_produtos{    
+    list-style-type: none;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    overflow-y: auto;
+    float: left;
+}
+
+.lista_produtos li{
+    background: #69110f;
+    padding: 5px 10px;
+    margin: 5px;
+    width: 98%;
+    height: auto;
+    float: left;
+    color: #fff;
+    text-align: justify;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px #000;
+}
+
+.lista_produtos li h4{
+    cursor: pointer;
+}
+
+.lista_produtos li p{
+    font-size: 11pt;
+}
+
+.lista_produtos li img{
+    width: 100px;   
+    height: 100px;
+    float: left;
+    margin-right: 20px;
+}
+
+.lista_produtos li button{
+    border-radius: 100%;
+    color: #333;
+    margin-right: 7px;
+    float: right;
+}
+
+.lista_produtos a:link, .lista_produtos a:visited{
+    text-decoration: none;
+    color: #666;
+}
+
+.lista_produtos a:hover, .lista_produtos a:active{
+    color: #f00;
+    text-decoration: none;
+}
+
+.modalProduto{
+    width: 100%;
+    height: 500px;
+    padding: 20px;
+    color: #000;
+    font-size: 16pt;
+}
+
+.imagem img{
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mesa{
+    border: solid 1px #892A28;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+.ul{
+    list-style-type: none;
+}
