@@ -28,7 +28,7 @@ $pagina = "gerenciaCardapio";
 	        </select>
 		</div>
 
-        <button class="btn btn-success btn-block" type="submit">Acessar Cardápio</button>
+        <button class="btn btn-success btn-block" type="submit">Acessar</button>
     </form>
 </div>
 
