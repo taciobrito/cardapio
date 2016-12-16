@@ -29,7 +29,7 @@ class GerenciaCardapioController extends Controller {
 	}
 
 	public function index(){
-		//if(isset($_SESSION['usuario-logado'])){
+		if(isset($_SESSION['usuario-logado'])){
 			$this->view->set('mesas', $this->mesa->listaTodos());
 			$this->view->set('categorias', $this->categoria->listaTodos());
 			$this->view->set('produtos', $this->produto->listaTodos());
@@ -38,11 +38,10 @@ class GerenciaCardapioController extends Controller {
 			$this->view->set('usuarios', $this->usuario->listaTodos());
 			$this->view->set('funcionarios', $this->funcionario->listaTodos());
 			$this->view->render('gerenciaCardapio');
-		//} else {
-		//	$_SESSION['info'] = 'Acesso restrito, é necessário estar logado!';
-		//	header('Location: ?page=login');
-		//	die();
-		//}
+		} else {
+			$_SESSION['info'] = 'Acesso restrito, é necessário estar logado!';
+			header('Location: ?page=login');
+		}
 
 	}
 }

@@ -17,11 +17,11 @@ $pagina = "home";
 		<form action="?page=login&action=logar" method="post" class="form">
 			<div class="form-group">
 		        <label for="nome">Usuário <?php include_once DIR.DS.'App'.DS.'mensagem.php';?></label>
-		        <input type="text" name="nome" id="nome" class="form-control" placeholder="Digite seu usuário"  autofocus />
+		        <input type="text" name="nome" id="nome" class="form-control" placeholder="Digite seu usuário" autofocus required />
 		    </div>
 		    <div class="form-group">
 		        <label for="senha">Senha <?php include_once DIR.DS.'App'.DS.'mensagem.php';?></label>
-		        <input type="password" name="senha" id="senha" class="form-control" placeholder="Digite sua senha"  />
+		        <input type="password" name="senha" id="senha" class="form-control" placeholder="Digite sua senha" required />
 			</div>
 			<div class="text-right">
 				

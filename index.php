@@ -12,7 +12,7 @@ $loader->registrar();
 
 //Conexao com banco
 try {
-	$pdo = new PDO("mysql:host=localhost;dbname=cardapio_virtual", "root", "");
+	$pdo = new PDO("mysql:host=localhost;dbname=cardapio_virtual", "root", "123456");
 } catch (PDOException $e){
 	echo "<h3>Erro ao estabelecer conexão com o banco: </h3>".$e."<br /><br />";
 }

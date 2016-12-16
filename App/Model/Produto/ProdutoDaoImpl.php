@@ -41,6 +41,7 @@ class ProdutoDaoImpl implements ProdutoDao{
 		$stmt = $this->pdo->prepare("UPDATE produto SET nome = ?, descricao = ?, imagem = ?, 
 			preco = ?, categoria_idCategoria = ? WHERE idProduto = ?");
 
+
 		$stmt->execute(array($produto->getNome(), $produto->getDescricao(), $produto->getImagem(), 
 			$produto->getPreco(), $produto->getCategoria_idCategoria(), $produto->getIdProduto()));
 	}

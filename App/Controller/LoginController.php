@@ -10,7 +10,7 @@ class LoginController extends Controller{
 	
 	public function __construct(UsuarioDao $usuarioDao) {	
 		parent::__construct();
-		$usuario = $usuarioDao;
+		$this->usuario = $usuarioDao;
 	}
 
 	public function index(){
@@ -31,14 +31,11 @@ class LoginController extends Controller{
 			$_usuario = new Usuario();
 			$nome = $_POST['nome'];
 			$senha = md5($_POST['senha']);
-			
 			$_usuario = $this->usuario->buscaPorUsuario($nome, $senha); 
-			print_r($_usuario); die;
-
-			if($resultado <= 0){
+			
+			if($_usuario == NULL) {
 				$_SESSION['danger'] = 'Usuário não existente!';
 				header('Location: ?page=login');
-				die();
 			} else {
 				$_SESSION['usuario-logado'] = $_POST['nome'];
 				$_SESSION['success'] = 'Usuário Logado com sucesso!';
@@ -50,6 +47,7 @@ class LoginController extends Controller{
 	public function logout(){
 		if(isset($_SESSION['usuario-logado'])){
 			unset($_SESSION['usuario-logado']);
+			$_SESSION['success'] = 'Usuário Deslogado com sucesso!';
 			header('Location: ?page=login');
 		}
 	}

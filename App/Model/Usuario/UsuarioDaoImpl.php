@@ -26,7 +26,6 @@ class UsuarioDaoImpl implements UsuarioDao {
 	}
 
 	public function buscaPorUsuario($nome, $senha){
-		echo $nome.' e '.$senha; die;
 		$stmt = $this->pdo->prepare("SELECT * FROM usuario WHERE nome = '$nome' and senha = '$senha'");
 		$stmt->setFetchMode(\PDO::FETCH_CLASS, 'App\Model\Usuario\Usuario');
 		$stmt->execute();

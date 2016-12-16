@@ -2,7 +2,7 @@
 //Titulo página
 $titulo_pagina = "Gerenciar Cardápio";
 $glyphicon = "off";
-$pagina = "cardapio";
+$pagina = "login&action=logout";
 
 	//Cabeçalho
 	include_once DIR.DS.'App'.DS.'Templates'.DS.'cabecalho.php';
