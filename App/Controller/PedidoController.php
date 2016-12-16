@@ -86,15 +86,15 @@ class PedidoController extends Controller {
 		$ultimoPedido = $this->pedido->buscaUltimoIdCadastrado($_SESSION['codigo_pedido'], $data_hora);
 		//Cria um novo objeto que 
 		$_pedido_produto = new Pedido_Produto();
+		$_pedido_produto->setPedido_IdPedido($ultimoPedido->getIdPedido());
 
 		if(isset($_SESSION['meu-pedido'])){
 			// recupera a lista dos produtos enviados no pedido
 			$itemsEnviados = $this->pedidoAtual->listaItemsPedido();
 			foreach ($itemsEnviados as $item) :
 				// relaciona pedido e produto		
-				$_pedido_produto->setPedido_IdPedido($ultimoPedido->getIdPedido());
 				$_pedido_produto->setProduto_idProduto($item->listaProduto()->getIdProduto());
-				$_pedido_produto->setQuantidade($item->listaQuantidade());				
+				$_pedido_produto->setQuantidade($item->listaQuantidade());
 
 				// insere na tabela o pedido e o produto relacionados
 				$this->pedido_produto->insere($_pedido_produto);
@@ -126,6 +126,18 @@ class PedidoController extends Controller {
 		$this->pedido->remove($idPedido);
 		$_SESSION['success'] = 'Pedido excluido com sucesso!';
 
+		$_SESSION['tab'] = 'pedidos';
+		header("Location: ?page=gerenciaCardapio");
+	}
+
+	public function atualizaStatus(){
+		$this->pedido->atualizaStatus($_POST['idPedido'], $_POST['status']);
+		$_SESSION['tab'] = 'pedidos';
+		header("Location: ?page=gerenciaCardapio");
+	}
+
+	public function atualizaFuncionario(){
+		$this->pedido->atualizaFuncionario($_POST['idPedido'], $_POST['funcionario_idFuncionario']);
 		$_SESSION['tab'] = 'pedidos';
 		header("Location: ?page=gerenciaCardapio");
 	}

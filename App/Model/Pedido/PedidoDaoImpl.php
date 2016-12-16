@@ -23,7 +23,14 @@ class PedidoDaoImpl implements PedidoDao {
 		$stmt = $this->pdo->prepare("SELECT p.*, m.numeroMesa, f.nome, pr.nome AS nome_produto, pp.quantidade FROM pedido AS p LEFT JOIN mesa AS m
 		ON p.mesa_idMesa = m.idMesa LEFT JOIN funcionario AS f ON p.funcionario_idFuncionario = f.idFuncionario 
 		LEFT JOIN pedido_produto AS pp ON p.idPedido = pp.pedido_idPedido LEFT JOIN produto AS pr ON pr.idProduto = pp.produto_idProduto
-		order by p.data_hora desc");
+		WHERE status <> 'Finalizado' AND status <> 'Cancelado' GROUP BY idPedido order by p.data_hora desc");
+		$stmt->setFetchMode(\PDO::FETCH_CLASS, 'App\Model\Pedido\Pedido');
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+	public function listaPedidosProdutos(){
+		$stmt = $this->pdo->prepare("SELECT p.idPedido, pr.nome AS nome_produto, pp.quantidade FROM pedido AS p LEFT JOIN 
+			pedido_produto AS pp ON p.idPedido = pp.pedido_idPedido LEFT JOIN produto AS pr ON pr.idProduto = pp.produto_idProduto");
 		$stmt->setFetchMode(\PDO::FETCH_CLASS, 'App\Model\Pedido\Pedido');
 		$stmt->execute();
 		return $stmt->fetchAll();
@@ -60,7 +67,7 @@ class PedidoDaoImpl implements PedidoDao {
 
 	// Atualiza Status
 	public function atualizaStatus($idPedido, $status){
-		$stmt = $this->pdo->prepare("UPDATE pedido SET status = $status WHERE idPedido = $idPedido");
+		$stmt = $this->pdo->prepare("UPDATE pedido SET status = '$status' WHERE idPedido = $idPedido");
 		$stmt->execute();
 	}
 

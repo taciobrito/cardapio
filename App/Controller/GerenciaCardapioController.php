@@ -34,6 +34,7 @@ class GerenciaCardapioController extends Controller {
 			$this->view->set('categorias', $this->categoria->listaTodos());
 			$this->view->set('produtos', $this->produto->listaTodos());
 			$this->view->set('pedidos', $this->pedido->listaPedidosPorData());
+			$this->view->set('pedidosProdutos', $this->pedido->listaPedidosProdutos());
 			$this->view->set('usuarios', $this->usuario->listaTodos());
 			$this->view->set('funcionarios', $this->funcionario->listaTodos());
 			$this->view->render('gerenciaCardapio');

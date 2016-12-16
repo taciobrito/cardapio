@@ -21,36 +21,19 @@
 					echo $data->format('H:i d/m'); 
 				?>
 			</td>
-			<td><?php echo $pedido->nome; ?></td>
+			<td>
+				<!-- Funcionario -->
+				<?php echo $pedido->nome; ?>
+				<a data-toggle="modal" data-target="#func_<?php echo $pedido->getIdPedido(); ?>">
+					<span class="text-right glyphicon glyphicon-pencil"></span>
+				</a>
+			</td>
 			<td>
 				<!-- tratamento de status -->
-				<?php
-					$glyphicon = '';
-					$cor = '';
-					switch ($pedido->getStatus()) {
-						case 'Em espera':
-							$glyphicon = 'time';
-							$cor = 'warning';
-							break;
-						
-						case 'Efetuado':
-							$glyphicon = 'ok-circle';
-							$cor = 'success';
-							break;
-
-						case 'Finalizado':
-							$glyphicon = 'ok-circle';
-							$cor = 'primary';
-							break;							
-
-						case 'Cancelado':
-							$glyphicon = 'remove-circle';
-							$cor = 'danger';
-							break;
-					}
-
-					echo $pedido->getStatus();
-				?>
+				<?php echo $pedido->getStatus(); ?> 
+				<a data-toggle="modal" data-target="#status_<?php echo $pedido->getIdPedido(); ?>">
+					<span class="text-right glyphicon glyphicon-pencil"></span>
+				</a>
 
 				<!--<span class="text-<?php echo $cor; ?> glyphicon glyphicon-<?php echo $glyphicon; ?>"></span>-->
 			</td>
@@ -63,7 +46,7 @@
 			</td>
 		</tr>
 
-		<!-- Modal do formulário -->
+		<!-- Modal de detalhes do pedido -->
 		<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="pedido_<?php echo $pedido->getIdPedido(); ?>">
 		    <div class="modal-dialog modal-sm" role="document">
 		        <div class="modal-content pedido_<?php echo $pedido->getIdPedido(); ?>">
@@ -80,36 +63,71 @@
 							</li>
 			            </ul>
 
-			            <!-- Formulário de edição de Pedido -->
-		                <form method="post" action="?page=pedido&action=salvar" class="form">
-		                	<div class="form-group">
-		               			<input type="hidden" name="idPedido" value="<?php echo $pedido->getIdPedido(); ?>" />
-	               				<label for="nomeCliente">Cliente</label>
-	                			<input type="text" name="nomeCliente" id="nomeCliente" class="form-control" placeholder="nomeCliente" required
-		                				value="<?php echo utf8_encode($pedido->getNomeCliente()); ?>" />
-		                	</div>
+		                <?php
+		                	if(isset($pedido->quantidade) and isset($pedido->nome_produto)) {
+		                ?>
+			                <h4>Produtos</h4>
+			                <ul>
+				                <?php foreach ($pedidosProdutos as $prod) { 
+				                		if($prod->getIdPedido() == $pedido->getIdPedido()){
+				                ?>
+				                	<li><?php echo $prod->quantidade . ' x ' .$prod->nome_produto; ?></li>
+				                <?php } } ?>
+			                </ul>
+			            <?php } ?>
 
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+		<!-- Modal Alterar Status -->
+		<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="status_<?php echo $pedido->getIdPedido(); ?>">
+		    <div class="modal-dialog modal-sm" role="document">
+		        <div class="modal-content status_<?php echo $pedido->getIdPedido(); ?>">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">Alterar Status</h4>
+		            </div>                                                   
+		            <div class="modal-body">
+		                <form method="post" action="?page=pedido&action=atualizaStatus" class="form">
+		                	<input type="hidden" name="idPedido" value="<?php echo $pedido->getIdPedido(); ?>" />
 		                	<div class="form-group">
-		                		<label for="mesa_idMesa">Mesa</label>
-	                			<select name="mesa_idMesa" id="mesa_idMesa" class="form-control" required>
-	                				<?php foreach ($mesas as $mesa) : ?>	                					?>
-	                					<option value="<?php echo $mesa->getIdMesa();?>" 
-	                						<?php if($mesa->getNumeroMesa() == $pedido->numeroMesa) {echo 'selected';}?> > 
-	                							<?php echo $mesa->getNumeroMesa();?>
-	              						</option>
-	                				<?php endforeach; ?>
+	               				<label for="status">Status</label>
+	                			<select name="status" id="status" class="form-control">
+	                				<option value="<?php echo $pedido->getStatus(); ?>" selected><?php echo $pedido->getStatus(); ?></option>
+	                				<option value="Em espera">Em espera</option>
+	                				<option value="Efetuado">Efetuado</option>
+	                				<option value="Finalizado">Finalizado</option>
+	                				<option value="Cancelado">Cancelado</option>	                				
 	                			</select>
 		                	</div>
 
-		                	<div class="form-group">
-	               				<label for="status">Status</label>
-	                			<input type="text" name="status" id="status" class="form-control" value="<?php echo $pedido->getStatus(); ?>" />
-		                	</div>
+		                	<div class="text-right">
+		                		<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span>Cancelar</button>
+		                		<button type="submit" class="btn btn-success">Salvar</button>
+		                	</div>	
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 
+		<!-- Modal Alterar funcionario -->
+		<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="func_<?php echo $pedido->getIdPedido(); ?>">
+		    <div class="modal-dialog modal-sm" role="document">
+		        <div class="modal-content func_<?php echo $pedido->getIdPedido(); ?>">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">Alterar Funcionário</h4>
+		            </div>                                                   
+		            <div class="modal-body">
+		                <form method="post" action="?page=pedido&action=atualizaFuncionario" class="form">
+		                	<input type="hidden" name="idPedido" value="<?php echo $pedido->getIdPedido(); ?>" />
 		                	<div class="form-group">
 		                		<label for="funcionario_idFuncionario">Funcionário</label>
 	                			<select name="funcionario_idFuncionario" id="funcionario_idFuncionario" class="form-control" required>
-	                				<?php foreach ($funcionarios as $funcionario) : ?>	                					?>
+	                				<?php foreach ($funcionarios as $funcionario) : ?>
 	                					<option value="<?php echo $funcionario->getIdFuncionario();?>" 
 	                						<?php if($funcionario->getNome() == $pedido->nome) {echo 'selected';}?> > 
 	                							<?php echo $funcionario->getNome();?>
@@ -121,26 +139,12 @@
 		                	<div class="text-right">
 		                		<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span>Cancelar</button>
 		                		<button type="submit" class="btn btn-success">Salvar</button>
-		                	</div>
+		                	</div>	
 		                </form>
-
-		                <?php
-		                	if(isset($pedido->quantidade) and isset($pedido->nome_produto)) {
-		                ?>
-
-			                <h4>Produtos</h4>
-
-			                <ul>
-			                	<li><?php echo $pedido->quantidade . ' x ' .$pedido->nome_produto; ?></li>
-			                </ul>
-
-			            <?php } ?>
-
 		            </div>
 		        </div>
 		    </div>
 		</div>
-
 
 	<?php endforeach; ?>
 </table>
